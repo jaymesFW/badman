@@ -101,4 +101,4 @@ st.title(f"Toolkit Builder")
 # Main - dataframes
 st.markdown("### Selected Team's Stats 2020/21")
 
-st.dataframe(data.sort_values(by=[choose_metric],ascending=False).reset_index(drop=True))
+st.dataframe(data.sort_values(by=["Goals"],ascending=False).reset_index(drop=True))
