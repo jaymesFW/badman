@@ -94,11 +94,10 @@ data = data[data['90s'] > mins_choice]
 
 
 data=data[["Player","Squad","MP","90s","Gls","Sh/90","SoT/90","CrdY","Fls","Fls/90","Tkl","Tkl/90"]]
-data["Goals"]=data["Gls"]
 # Main
 st.title(f"Toolkit Builder")
 
 # Main - dataframes
 st.markdown("### Selected Team's Stats 2020/21")
 
-st.dataframe(data.sort_values(by=["Goals"],ascending=False).reset_index(drop=True))
+st.dataframe(data.sort_values(by=["Gls"],ascending=False).reset_index(drop=True))
