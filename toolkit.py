@@ -102,4 +102,4 @@ st.markdown("### Selected Team's Stats 2020/21")
 
 data=data.sort_values(by=["Gls"],ascending=False).reset_index(drop=True)
 
-st.dataframe(data.style.highlight_max(axis=1))
+st.dataframe(data.style.highlight_max(axis=0))
