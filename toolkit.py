@@ -1,22 +1,30 @@
+
 import pandas as pd
 import numpy as np
 import streamlit as st
 #import matplotlib.pyplot as plt
 
-# Data import & columns
-af=pd.read_html('https://fbref.com/en/comps/Big5/2020-2021/stats/players/2020-2021-Big-5-European-Leagues-Stats')[0]
-af = af.droplevel(0, axis=1)
-af = af[af.Player != 'Player']
+
+fbref_file1='https://fbref.com/en/comps/Big5/2020-2021/stats/players/2020-2021-Big-5-European-Leagues-Stats'
+fbref_file2='https://fbref.com/en/comps/Big5/2020-2021/shooting/players/2020-2021-Big-5-European-Leagues-Stats'
+fbref_file3='https://fbref.com/en/comps/Big5/2020-2021/misc/players/2020-2021-Big-5-European-Leagues-Stats'
+fbref_file4='https://fbref.com/en/comps/Big5/2020-2021/defense/players/2020-2021-Big-5-European-Leagues-Stats'
+
+@st.cache(allow_output_mutation=True)
+def get_data(fbref_file):
+    df=pd.read_html(fbref_file)[0]
+    df = df.droplevel(0, axis=1)
+    df = df[df.Player != 'Player']
+    return (df)
+
+af=get_data(fbref_file1)
 af["MP"] = pd.to_numeric(af["MP"])
 
 af["Player+Team"]=af["Player"]+" "+af["Squad"]
 
 af=af[["Player+Team","MP"]]
 
-
-df=pd.read_html('https://fbref.com/en/comps/Big5/2020-2021/shooting/players/2020-2021-Big-5-European-Leagues-Stats')[0]
-df = df.droplevel(0, axis=1)
-df = df[df.Player != 'Player']
+df=get_data(fbref_file2)
 df["90s"] = pd.to_numeric(df["90s"]).round(2)
 df["Gls"] = pd.to_numeric(df["Gls"])
 df["Sh/90"] = pd.to_numeric(df["Sh/90"])
@@ -27,9 +35,7 @@ df["Player+Team"]=df["Player"]+" "+df["Squad"]
 dfatt=df.join(af.set_index('Player+Team'), on='Player+Team')
 
 
-df1=pd.read_html('https://fbref.com/en/comps/Big5/2020-2021/misc/players/2020-2021-Big-5-European-Leagues-Stats')[0]
-df1 = df1.droplevel(0, axis=1)
-df1 = df1[df1.Player != 'Player']
+df1=get_data(fbref_file3)
 df1["90s"] = pd.to_numeric(df1["90s"])
 df1["Fls"] = pd.to_numeric(df1["Fls"])
 df1["CrdY"] = pd.to_numeric(df1["CrdY"])
@@ -41,9 +47,7 @@ cols1= ["Player+Team","Comp","CrdY","Fls","Fls/90"] #,"Squad","90s"
 
 df1 = df1[cols1]
 
-df2=pd.read_html('https://fbref.com/en/comps/Big5/2020-2021/defense/players/2020-2021-Big-5-European-Leagues-Stats')[0]
-df2 = df2.droplevel(0, axis=1)
-df2 = df2[df2.Player != 'Player']
+df2=get_data(fbref_file4)
 
 df2.columns.values[14] = "TEST"
 
@@ -102,4 +106,5 @@ st.markdown("### Selected Team's Stats 2020/21")
 
 data=data.sort_values(by=["Gls"],ascending=False).reset_index(drop=True)
 
-st.dataframe(data.style.highlight_max(axis=0))
+st.dataframe(data.style.format({"90s":"{:.2f}","Sh/90":"{:.2f}","SoT/90":"{:.2f}"
+                                ,"Fls/90":"{:.2f}","Tkl":"{:.2f}","Tkl/90":"{:.2f}"}))
