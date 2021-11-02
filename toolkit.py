@@ -8,10 +8,10 @@ fbref_file2='https://fbref.com/en/comps/Big5/shooting/players/Big-5-European-Lea
 fbref_file3='https://fbref.com/en/comps/Big5/misc/players/Big-5-European-Leagues-Stats'
 fbref_file4='https://fbref.com/en/comps/Big5/defense/players/Big-5-European-Leagues-Stats'
 
-#st.set_page_config(
- #    page_title="",
-  #   layout="wide",
-   #  )
+st.set_page_config(
+    page_title="",
+     layout="wide",
+     )
 
 @st.cache(allow_output_mutation=True)
 def get_data(fbref_file):
