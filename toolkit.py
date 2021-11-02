@@ -87,7 +87,7 @@ st.sidebar.markdown('### Data Filters')
 
 leagues = list(data['Comp'].drop_duplicates())
 league_choice = st.sidebar.selectbox(
-    "Filter by league:", leagues, index=1)
+    "Filter by league:", leagues, index=0)
 
 data=data.loc[(data['Comp'] == league_choice)]
 
