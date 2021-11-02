@@ -122,6 +122,6 @@ data=data[["Player","Squad","MP","90s","Gls","Gls/90","Sh/90","SoT/90","CrdY",
 st.title(f"Toolkit Builder")
 
 # Main - dataframes
-st.markdown("### Selected Team's Stats 2020/21")
+st.markdown("### Selected Team's Stats 2021/22")
 
 st.dataframe(data.sort_values(by=[choose_metric],ascending=False).reset_index(drop=True).head(25))
