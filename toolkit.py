@@ -1,4 +1,3 @@
-
 import pandas as pd
 import numpy as np
 import streamlit as st
@@ -256,12 +255,12 @@ st.markdown("### Player Stats 2021/22")
 
 data=data.sort_values(by=[choose_metric],ascending=False).reset_index(drop=True)
 
-st.dataframe(data)
+st.dataframe(data.assign(hack='').set_index('hack'))
 
 st.markdown("### Team Stats 2021/22")
 
-st.dataframe(df_all_stats)
+st.dataframe(df_all_stats.assign(hack='').set_index('hack'))
 
 st.markdown("### Ref Stats 2021/22")
 
-st.dataframe(df_all_refs)
+st.dataframe(df_all_refs.assign(hack='').set_index('hack'))
